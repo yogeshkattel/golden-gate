@@ -70,27 +70,6 @@ class CommentReplyView(View):
         return redirect(F"/blog/{slugs}/detail")
            
 
-def sendmail(self, request):
-        form= FeedbackForm (request.POST)
-        email = form.data.get("Email")
-        subject = form.data.get("Subject")
-        message = form.data.get("Message")
-
-        if form.is_valid:
-            send_mail(
-                subject="Thankyou message",
-                message="Thankyou for sending us your feedback Means a lot for us." + email,
-                from_email = settings.EMAIL_HOST_USER,
-                recipient_list= [email,]
-            )
-            send_mail(
-                subject,
-                message,
-                email,
-                [settings.EMAIL_HOST_USER,]
-            )
-            
-        return redirect("/contactus/")
 
 #This is contact us page 
 class contactus(View):
@@ -136,7 +115,7 @@ class ViewersProblemsView(View):
     def post(self, request):
         form = QuestionAskingForm(request.POST)
         Name = form.data.get("FullName")
-        Email = form.data.get("Email")
+        email = form.data.get("Email")
         Phone = form.data.get("Phone")
         Problem = form.data.get("Problem")
         Description = form.data.get("Description")
@@ -146,14 +125,19 @@ class ViewersProblemsView(View):
                 subject="Thankyou for sending us your queries",
                 message="Thankyou for sending us your queries owr docutor will contact you personnally shortly." ,
                 from_email = settings.EMAIL_HOST_USER,
-                recipient_list= [Email,]
+                recipient_list= [email,]
             )
             send_mail(
-                subject = "Thanks for asking your question",
-                message = "we will",
-                Email = Email,
-                recipient_list = [settings.EMAIL_HOST_USER,]
+                Problem,
+                Description + email,
+                email,
+                [settings.EMAIL_HOST_USER,]
+
+
+
+
             )
+
         return render(request, "html/queries.html", {"form":form})
             
     
