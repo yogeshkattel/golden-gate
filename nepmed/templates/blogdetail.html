@@ -1,0 +1,34 @@
+{{blog.Title}}
+{{blog.SubTitle}}
+{{blog.Description}}
+{{blog.DateTime}}
+
+<form action="" method="POST">
+    {% csrf_token %}
+{% for form in form %}
+{{form}}
+
+{% endfor %}
+<button type="submit"> comment </button>
+</form>
+<br>
+
+{% for comment in comments %}
+{% if comment.is_parent  %}
+{{comment.Author}} <br>
+{{comment.Content}} <br>
+{% endif %}
+
+{% for child_commment in comment.child %}
+{{child_commment.Author}}
+ {{child_commment.Content}}
+ <form action="{% url 'commentreply' comment.Blog.slug comment.pk %}" method="POST">
+    {% csrf_token %}
+     {{form.as_p}}
+     <button type="submit">Reply</button>
+ </form>
+{% endfor %}
+
+{{comment.Blog.slug}}
+
+{% endfor %}

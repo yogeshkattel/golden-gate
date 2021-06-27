@@ -1,0 +1,159 @@
+from django.core.checks import messages
+from django.db import models
+from django.http import response
+from django.shortcuts import redirect, render
+from django.utils.html import format_html
+from django.views.generic import TemplateView, ListView, View
+from .forms import * 
+from django.views.generic.detail import DetailView
+from django.core.mail import send_mail
+# Create your views here.
+from .models import *
+from django.conf import settings
+
+# this is inded page faq is a model and listview is used to list data in faq
+class Home(TemplateView):
+    template_name = 'html/index.html'
+
+
+#this is a blogist page this page lists all the available blogs
+class BlogView(ListView):
+    model = Blog
+    template_name = "html/diseases.html"
+    context_object_name = "blog"
+    
+#this is a singleblog page which shows the data of a specific blog that user visits
+class BlogDetailView(View):
+
+    def get(self, request, slug):
+        blog = Blog.objects.get(slug=slug)
+        comments = Comments.objects.filter(Blog=blog).order_by('DateTime').all()
+        form = CommentForm
+       
+        context = {
+            "blog":blog,
+            "comments":comments,
+            "form":form,
+            
+        }
+        return render(request, "html/disease_detail.html", context)
+    def post(self, request, slug):
+        blog = Blog.objects.get(slug=slug)
+        form = CommentForm(request.POST)
+        
+        if form.is_valid:
+            comment = form.save(commit=False)
+            comment.Blog = blog
+            comment.save()
+        
+        context = {
+            "blog":blog,
+            "form":form,
+           
+        }
+        return render(request, "html/disease_detail.html", context)
+
+
+class CommentReplyView(View):
+    def post(self, request, pk, slug ,*args, **kwargs):
+        form = CommentForm(request.POST)
+        blog = Blog.objects.get(slug=slug)
+        slugs = blog.slug
+        parent_comment = Comments.objects.get(pk=pk)
+
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.Blog = blog
+            reply.Parent = parent_comment
+            reply.save()
+
+        return redirect(F"/blog/{slugs}/detail")
+           
+
+def sendmail(self, request):
+        form= FeedbackForm (request.POST)
+        email = form.data.get("Email")
+        subject = form.data.get("Subject")
+        message = form.data.get("Message")
+
+        if form.is_valid:
+            send_mail(
+                subject="Thankyou message",
+                message="Thankyou for sending us your feedback Means a lot for us." + email,
+                from_email = settings.EMAIL_HOST_USER,
+                recipient_list= [email,]
+            )
+            send_mail(
+                subject,
+                message,
+                email,
+                [settings.EMAIL_HOST_USER,]
+            )
+            
+        return redirect("/contactus/")
+
+#This is contact us page 
+class contactus(View):
+    #get method to render form inn html
+    def get(self, request, *args, **kwargs):
+        form = FeedbackForm
+
+        return render(request, "html/contactus.html", {'form':form})
+    # post method for fetching entered data from frontend
+    
+    
+    def post(self, request, *args, **kwargs):
+        #fetching form data
+        form= FeedbackForm (request.POST)
+        email = form.data.get("Email")
+        subject = form.data.get("Subject")
+        message = form.data.get("Message")
+        if form.is_valid:
+            form.save()
+            send_mail(
+                subject="Thankyou message",
+                message="Thankyou for sending us your feedback Means a lot for us." ,
+                from_email = settings.EMAIL_HOST_USER,
+                recipient_list= [email,]
+            )
+            send_mail(
+                subject,
+                message + email,
+                email,
+                [settings.EMAIL_HOST_USER,]
+            )
+                
+            
+            
+        return render(request, "html/contactus.html", {'form':form})
+
+
+class ViewersProblemsView(View):
+    def get(self, request):
+        form = QuestionAskingForm
+        return  render(request, "html/queries.html", {"form":form})
+    
+    def post(self, request):
+        form = QuestionAskingForm(request.POST)
+        Name = form.data.get("FullName")
+        Email = form.data.get("Email")
+        Phone = form.data.get("Phone")
+        Problem = form.data.get("Problem")
+        Description = form.data.get("Description")
+        if form.is_valid:
+            form.save()
+            send_mail(
+                subject="Thankyou for sending us your queries",
+                message="Thankyou for sending us your queries owr docutor will contact you personnally shortly." ,
+                from_email = settings.EMAIL_HOST_USER,
+                recipient_list= [Email,]
+            )
+            send_mail(
+                subject = "Thanks for asking your question",
+                message = "we will",
+                Email = Email,
+                recipient_list = [settings.EMAIL_HOST_USER,]
+            )
+        return render(request, "html/queries.html", {"form":form})
+            
+    

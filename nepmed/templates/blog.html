@@ -1,0 +1,7 @@
+{% for blog in blog %}
+{{blog.Title}} <br>
+{{blog.SubTitle}} <br>
+{{blog.DateTime}} <br>
+<a href="{% url 'blogdetail' blog.slug %}">show details</a>
+
+{% endfor %}
