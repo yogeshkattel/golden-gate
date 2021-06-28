@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,8 +56,8 @@
                     <li><a class="active nav-link" href="#home">Home</a></li>
                     <li><a class="nav-link" href="#services">Services</a></li>
                     <li><a class="nav-link" href="#faq">FAQ</a></li>
-                    <li><a class="nav-link" href="{% url "queries" %}">Queries</a></li>
-                    <li><a class="nav-link" href="{% url "diseaselist" %}">Diseases</a></li>
+                    <li><a class="nav-link" href="{% url 'queries' %}">Queries</a></li>
+                    <li><a class="nav-link" href="{% url  'diseaselist' %}">Diseases</a></li>
                 </ul>
             </div>
             <div class="search">
@@ -77,20 +78,18 @@
                 <div class="card1">
                     <img src="{% static 'img/ambulance.png' %}" alt="Ambulance">
                     <p class="title">
-                        <b>Reliable Service</b>
+                        <b>Trusted by many</b>
                     </p>
                     <p class="description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, sapiente! Dolor necessitatibus reprehenderit quisquam vero?
-                    </p>
+                        We are trusted by many people and organizations worldwide. </p>
                 </div>
                 <div class="card2">
                     <img src="{% static 'img/heart.png' %}" alt="Heart">
                     <p class="title">
-                        <b>World Class Service</b>
+                        <b>Online Medical Consultancy</b>
                     </p>
                     <p class="description">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero hic itaque eveniet aspernatur eos est.
-                    </p>
+                        We are know to provide best online health Consultancy. </p>
                 </div>
                 <div class="card3">
                     <img src="{% static 'img/clock.png' %}" alt="Clock">
@@ -98,8 +97,7 @@
                         <b>24 x 7 Available</b>
                     </p>
                     <p class="description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, sapiente! Dolor necessitatibus reprehenderit quisquam vero?
-                    </p>
+                        We are always available for your service. We are never down. </p>
                 </div>
             </div>
         </div>
@@ -136,29 +134,30 @@
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/UYjlbTnF-YE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
+        <h3 style="text-align: center;">How to be safe from infections ?</h3>
         <div class="service-cards">
             <div class="card">
-                <img class="service-card-img" src="{% static 'img/service1.jpg' %}" alt="Digital Control Center">
+                <img class="service-card-img" src="{% static 'img/service1.jpg' %}">
                 <div class="text">
-                    Digital Control Center
+                    Wash hands frequently
                 </div>
             </div>
             <div class="card">
-                <img class="service-card-img" src="{% static 'img/service2.jpg' %}" alt="Hygenice Operating Room">
+                <img class="service-card-img" src="{% static 'img/service2.jpg' %}">
                 <div class="text">
-                    Hygenice Operating Room
+                    Wear a mask
                 </div>
             </div>
             <div class="card">
-                <img class="service-card-img" src="{% static 'img/service3.jpg' %}" alt="Specialist Physician">
+                <img class="service-card-img" src="{% static 'img/service3.jpg' %}">
                 <div class="text">
-                    Specialist Physician
+                    Maintain social distancing
                 </div>
             </div>
             <div class="card">
-                <img class="service-card-img" src="{% static 'img/service4.jpg' %}" alt="Digital Control Center">
+                <img class="service-card-img" src="{% static 'img/service4.jpg' %}">
                 <div class="text">
-                    Digital Control Center
+                    Avoid gathering
                 </div>
             </div>
         </div>
