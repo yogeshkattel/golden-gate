@@ -23,6 +23,10 @@ class CommentForm(forms.ModelForm):
             "Content",
             
         }
+        widgets = {
+            "Author": forms.TextInput(attrs={"class":"name"}),
+            "Content": forms.Textarea(attrs={"class":"content"})
+        }
 
 class CommentReplyForm(forms.ModelForm):
     class Meta:
@@ -47,9 +51,9 @@ class QuestionAskingForm(forms.ModelForm):
         widgets= {
             'FullName': forms.TextInput(attrs={'class':'fullname', 'id':'fullname', 'placeholder':'fullname'}),
             'Email': forms.EmailInput(attrs={'class':'email','id':'email', 'placeholder':'Email'}),
-            'Phone': forms.NumberInput(attrs={'class':'phone', 'id':'phone', 'placegolder':'Phone number'}),
+            'Phone': forms.NumberInput(attrs={'class':'phone', 'id':'phone', 'placeholder':'Phone number'}),
             'Problem': forms.TextInput(attrs={'class':'problem', 'id':'problem', 'placeholder':'Your problem'}),
-            'Description': forms.Textarea(attrs={'class':'description', 'name':'description', 'id':'description', 'cols':'100', 'rows':'5'})
+            'Description': forms.Textarea(attrs={'class':'description',"placeholder":"Description", 'name':'description', 'id':'description', 'cols':'100', 'rows':'5' })
 
             
         }

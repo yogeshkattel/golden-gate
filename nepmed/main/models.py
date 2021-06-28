@@ -15,6 +15,10 @@ class Blog(models.Model):
     DateTime = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=250, null=True, blank=True)
 
+    def __str__(self):
+        return self.Title
+        
+
 class Comments(models.Model):
     Author = models.CharField(max_length=50, default="Anonimous")
     Content = models.TextField()
@@ -30,6 +34,9 @@ class Comments(models.Model):
         if self.Parent is None:
             return True
         return False
+    def __str__(self):
+        return self.Author
+
     
 
 
@@ -46,9 +53,19 @@ class FeedBack(models.Model):
     Subject = models.CharField(max_length=200)
     Message = models.TextField()
 
+
+    def __str__(self):
+        return self.Email
+        
+
 class ViewersProblem(models.Model):
     FullName = models.CharField(max_length=100, default="Anonymous")
     Email = models.EmailField()
     Phone = models.IntegerField(null=True, blank=True)
     Problem = models.CharField(max_length=200)
     Description = models.TextField()
+
+
+    def __str__(self):
+        return self.FullName
+        

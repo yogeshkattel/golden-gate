@@ -37,8 +37,10 @@ class BlogDetailView(View):
             
         }
         return render(request, "html/disease_detail.html", context)
+        
     def post(self, request, slug):
         blog = Blog.objects.get(slug=slug)
+        slugs = blog.slug
         form = CommentForm(request.POST)
         
         if form.is_valid:
@@ -51,7 +53,7 @@ class BlogDetailView(View):
             "form":form,
            
         }
-        return render(request, "html/disease_detail.html", context)
+        return redirect(F"/blog/{slugs}/detail")
 
 
 class CommentReplyView(View):
