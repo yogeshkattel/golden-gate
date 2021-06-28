@@ -131,7 +131,7 @@ class ViewersProblemsView(View):
             )
             send_mail(
                 Problem,
-                Description + email,
+                Description+ "  " + email+ "  " + Phone,
                 email,
                 [settings.EMAIL_HOST_USER,]
 
