@@ -13,13 +13,13 @@ from django.conf import settings
 
 # this is inded page faq is a model and listview is used to list data in faq
 class Home(TemplateView):
-    template_name = 'html/index.html'
+    template_name = 'index.html'
 
 
 #this is a blogist page this page lists all the available blogs
 class BlogView(ListView):
     model = Blog
-    template_name = "html/diseases.html"
+    template_name = "diseases.html"
     context_object_name = "blog"
     
 #this is a singleblog page which shows the data of a specific blog that user visits
@@ -36,7 +36,7 @@ class BlogDetailView(View):
             "form":form,
             
         }
-        return render(request, "html/disease_detail.html", context)
+        return render(request, "disease_detail.html", context)
         
     def post(self, request, slug):
         blog = Blog.objects.get(slug=slug)
@@ -79,7 +79,7 @@ class contactus(View):
     def get(self, request, *args, **kwargs):
         form = FeedbackForm
 
-        return render(request, "html/contactus.html", {'form':form})
+        return render(request, "contactus.html", {'form':form})
     # post method for fetching entered data from frontend
     
     
@@ -106,13 +106,13 @@ class contactus(View):
                 
             
             
-        return render(request, "html/contactus.html", {'form':form})
+        return render(request, "contactus.html", {'form':form})
 
 
 class ViewersProblemsView(View):
     def get(self, request):
         form = QuestionAskingForm
-        return  render(request, "html/queries.html", {"form":form})
+        return  render(request, "queries.html", {"form":form})
     
     def post(self, request):
         form = QuestionAskingForm(request.POST)
@@ -140,6 +140,6 @@ class ViewersProblemsView(View):
 
             )
 
-        return render(request, "html/queries.html", {"form":form})
+        return render(request, "queries.html", {"form":form})
             
     

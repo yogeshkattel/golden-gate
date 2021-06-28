@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment -NepMeds</title>
+
+    <!-- header icon -->
+    <link rel="icon" href="{% static 'img/logo.png' %}">
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+
+    <!-- css files -->
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link rel="stylesheet" href="{% static '/css/footer.css' %}">
+    <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
+
+</head>
+
+<body>
+
+    <!-- navbar section -->
+
+    <header>
+        <div class="nav-top">
+            <div class="logo">
+                <a href="/"><img src="{% static "/img/logo.png" %}" alt="NepMeds Logo"></a>
+                <span class="logo">NepMeds</span>
+            </div>
+            <div class="phone">
+                <div class="phone-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <span><a href="tel:9800000000">98 000 000</a></span>
+            </div>
+            <div class="email">
+                <div class="email-icon">
+                    <i class="far fa-envelope"></i>
+                </div>
+                <span><a href="mailto:nepmeds@gmail.com">nepmeds@gmail.com</a></span>
+            </div>
+            <div class="clock">
+                <div class="clock-icon">
+                    <i class="far fa-clock"></i>
+                </div>
+                <span><a href="#">24 x 7</a></span>
+            </div>
+        </div>
+
+        <div class="nav-bottom">
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#services">Services</a></li>
+                    <li><a href="/#faq">FAQ</a></li>
+                    <li><a class="active" href="{% url 'queries' %}">Queries</a></li>
+                    <li><a href="{% url 'diseaselist' %}">Diseases</a></li>
+                </ul>
+            </div>
+            <div class="search">
+                <input type="text" placeholder="Search....">
+            </div>
+        </div>
+    </header>
+
+    <!-- queires page -->
+    <div class="queries">
+        <div class="title">
+            <h3>Ask us anything</h3>
+        </div>
+        <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form">
+            <div class="input">
+                <label for="fullname">Fullname:</label>
+                {{form.FullName}}
+            </div>
+            <div class="input">
+                <label for="email">Email:</label>
+                {{form.Email}}
+            </div>
+            <div class="input">
+                <label for="phone">Phone:</label>
+                {{form.Phone}}
+            </div>
+            <div class="input">
+                <label for="problem">Problem:</label>
+                {{form.Problem}}
+
+            </div>
+            <div class="input">
+                <label for="description">Description:</label>
+                {{form.Description}}
+
+            </div>
+            <div class="send_button">
+                <button id="sendBtn" type="submit">
+                    Send
+                </button>
+            </div>
+        </div>
+    </form>
+    </div>
+</body>
+<script src="{% static 'js/FormValidator.js' %}"></script>
+
+</html>
