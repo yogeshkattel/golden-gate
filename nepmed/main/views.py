@@ -139,6 +139,8 @@ class ViewersProblemsView(View):
 
 
             )
+        else:
+            return messages("sorry the form was invalid")
 
         return render(request, "queries.html", {"form":form})
             
