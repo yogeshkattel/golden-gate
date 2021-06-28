@@ -1,6 +1,6 @@
 from django.core.checks import messages
 from django.db import models
-from django.http import response
+from django.http import response, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.html import format_html
 from django.views.generic import TemplateView, ListView, View
@@ -125,7 +125,7 @@ class ViewersProblemsView(View):
             form.save()
             send_mail(
                 subject="Thankyou for sending us your queries",
-                message="Thankyou for sending us your queries owr docutor will contact you personnally shortly." ,
+                message="Thankyou for sending us your queries owr doctor will contact you personnally shortly." ,
                 from_email = settings.EMAIL_HOST_USER,
                 recipient_list= [email,]
             )
@@ -139,6 +139,7 @@ class ViewersProblemsView(View):
 
 
             )
+            return HttpResponse("Thanks for asking your queries")
         
 
         return render(request, "queries.html", {"form":form})
