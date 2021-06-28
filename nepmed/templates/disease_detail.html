@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Cure and Prevention -NepMeds</title>
+
+    <!-- header icon -->
+    <link rel="icon" href="{% static 'img/logo.png' %}">
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+
+    <!-- css files -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+
+
+
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-top">
+            <div class="logo">
+                <a href="/"><img src="{% static 'img/logo.png' %}" alt="NepMeds Logo"></a>
+                <span class="logo">NepMeds</span>
+            </div>
+            <div class="phone">
+                <div class="phone-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <span><a href="tel:9800000000">98 000 000</a></span>
+            </div>
+            <div class="email">
+                <div class="email-icon">
+                    <i class="far fa-envelope"></i>
+                </div>
+                <span><a href="mailto:nepmeds@gmail.com">nepmeds@gmail.com</a></span>
+            </div>
+            <div class="clock">
+                <div class="clock-icon">
+                    <i class="far fa-clock"></i>
+                </div>
+                <span><a href="#">24 x 7</a></span>
+            </div>
+        </div>
+
+        <div class="nav-bottom">
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#services">Services</a></li>
+                    <li><a href="/#faq">FAQ</a></li>
+                    <li><a href="{% url 'queries'  %}">Query</a></li>
+                    <li><a class="active" href="{% url 'diseaselist' %}">Diseases</a></li>
+                </ul>
+            </div>
+            <div class="search">
+                <input type="text" placeholder="Search....">
+            </div>
+        </div>
+    </header>
+
+
+    <!-- disease detail -->
+    <div class="disease_detail">
+        <h1>Corona -Covid 19</h1>
+        <div class="img">
+        </div>
+        <div class="text">
+            <div class="causes">
+                <h3>{{blog.Title|safe}}</h3>
+                {{blog.DateTime|safe}}
+                <h4>{{blog.SubTitle|safe}}</h4>
+                {{blog.Description|safe}}
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+
+    <hr>
+
+
+    <div class="comment">
+        <h3>Put Down Your Comments.</h3>
+        <form action="" method="POST">
+            {% csrf_token %} {% for form in form %} {{form}} {% endfor %}
+            <button id="cmtBtn" type="submit"> comment </button>
+        </form>
+
+        <br> {% for comment in comments %} {% if comment.is_parent %} {{comment.Author}} <br> {{comment.Content}} <br>
+        <h4>Replies</h4>
+        <form action="{% url 'commentreply' comment.Blog.slug comment.pk %}" method="POST">
+            {% csrf_token %} {{form}}
+
+            <button type="submit">Reply</button>
+        </form>
+        {% endif %} {% for child_commment in comment.child %} {{child_commment.Author}} <br> {{child_commment.Content}} <br> {% endfor %} {% endfor %}
+    </div>
+
+
+    <div class="footer">
+        <div class="title">
+            <img src="{% static 'img/logo.png' %}" alt="logo">
+            <h3>NepMeds - We care for you'.</h3>
+        </div>
+        <h4>&copy 2021 NepMeds Corporation</h4>
+    </div>
+    <div class="floater">+</div>
+</body>
+<!-- open new tab for querypage -->
+<script>
+    document.querySelector('.floater').addEventListener('click', () => {
+        window.open("/queries.html", "_blank");
+    })
+</script>
+<script>
+    const btn = document.querySelector('#cmtBtn');
+    btn.addEventListener('click', () => {
+        const name = document.querySelector('.name').value;
+        if (!name || name == "") {
+            return alert("Fill all fields");
+        } else {
+            alert(`\n\nThanks for your comment ${name}.\n\n`)
+        }
+    })
+</script>
+
+</html>
