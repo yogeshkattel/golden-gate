@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,7 +73,6 @@
     <div class="disease_detail">
         <h1>Corona -Covid 19</h1>
         <div class="img">
-            <img src="{{blog.Image.url}}" alt="">
         </div>
         <div class="text">
             <div class="causes">
@@ -81,64 +81,34 @@
                 <h4>{{blog.SubTitle|safe}}</h4>
                 {{blog.Description|safe}}
             </div>
-            <!-- <div class="prevention">
-                <h3>Prevention measures:</h3>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nisi ipsa labore blanditiis excepturi odio veritatis soluta omnis accusantium a fuga tempora est, minus facilis maiores et repellendus assumenda tempore impedit culpa totam eum ad. Natus debitis
-                accusantium dignissimos est esse amet, adipisci tempora nesciunt explicabo modi aperiam hic eius cupiditate assumenda corporis commodi sint molestiae laboriosam veniam repellendus quae exercitationem eos non consequuntur. Aliquid magni
-                laudantium porro dolore perspiciatis corrupti sit quidem alias necessitatibus, excepturi adipisci, at vel magnam facilis! Deleniti ipsum ratione facilis, ipsa unde labore quo dolorum praesentium accusamus explicabo molestias tenetur perferendis
-                quidem officiis iusto reiciendis. Quo.
-            </div>
-            <div class="cure">
-                <h3>How to be cure if infected ?</h3>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil quo minima ipsa ab fugiat voluptas, ratione facere facilis quasi sint laudantium soluta quis culpa iusto voluptatibus ex natus doloremque voluptate nisi, provident incidunt velit? Laudantium
-                maxime corrupti itaque non ratione consequuntur vitae natus esse enim aspernatur quam eligendi nulla, sunt aliquam hic facere! Hic veniam consequatur est temporibus impedit, asperiores optio facere, error, cumque accusantium officia consequuntur
-                ea qui labore. Ex voluptatibus dicta similique molestias sit, voluptates error corrupti commodi quo fuga non veritatis officiis. Dolore maxime hic tempore iusto eius id! Laudantium error fuga eligendi quod ex exercitationem explicabo.
-            </div>  -->
-            
-            
-            
-            
+
+
+
+
+
 
         </div>
+    </div>
+
+    <hr>
+
+
+    <div class="comment">
+        <h3>Put Down Your Comments.</h3>
+        <form action="" method="POST">
+            {% csrf_token %} {% for form in form %} {{form}} {% endfor %}
+            <button id="cmtBtn" type="submit"> comment </button>
+        </form>
+
+        <br> {% for comment in comments %} {% if comment.is_parent %} {{comment.Author}} <br> {{comment.Content}} <br>
+        <h4>Replies</h4>
+        <form action="{% url 'commentreply' comment.Blog.slug comment.pk %}" method="POST">
+            {% csrf_token %} {{form}}
+
+            <button type="submit">Reply</button>
+        </form>
+        {% endif %} {% for child_commment in comment.child %} {{child_commment.Author}} <br> {{child_commment.Content}} <br> {% endfor %} {% endfor %}
     </div>
-
-
-
-    
-<form action="" method="POST">
-    {% csrf_token %}
-    {% for form in form %}
-{{form}}
-
-{% endfor %}
-<button type="submit"> comment </button>
-</form>
-<br>
-
-
-
-
-
-{% for comment in comments %}
-{% if comment.is_parent  %}
-{{comment.Author}} <br>
-{{comment.Content}} <br>
-<form action="{% url 'commentreply' comment.Blog.slug comment.pk %}" method="POST">
-    {% csrf_token %}
-     {{form}}
-     <button type="submit">Reply</button>
- </form>
-{% endif %}
-
-{% for child_commment in comment.child %}
-{{child_commment.Author}} <br>
-{{child_commment.Content}} <br>
-
-{% endfor %}
-
-
-
-{% endfor %}
 
 
     <div class="footer">
@@ -154,6 +124,17 @@
 <script>
     document.querySelector('.floater').addEventListener('click', () => {
         window.open("/queries.html", "_blank");
+    })
+</script>
+<script>
+    const btn = document.querySelector('#cmtBtn');
+    btn.addEventListener('click', () => {
+        const name = document.querySelector('.name').value;
+        if (!name || name == "") {
+            return alert("Fill all fields");
+        } else {
+            alert(`\n\nThanks for your comment ${name}.\n\n`)
+        }
     })
 </script>
 
